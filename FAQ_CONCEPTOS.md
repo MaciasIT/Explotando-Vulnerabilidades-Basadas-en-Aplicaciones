@@ -25,4 +25,28 @@ Este documento centraliza las explicaciones detalladas y respuestas a preguntas 
 > **R:** El servidor entró en "pánico" al no encontrar un archivo y, al no tener un manejador de errores seguro, volcó toda la información técnica interna en la pantalla del usuario. En lugar de un "Archivo no encontrado", dio una clase magistral sobre cómo está programado por dentro.
 
 ---
+
+## 🏛️ Conceptos de Arquitectura y Diseño
+
+### 2. Modelado de Amenazas (Threat Modeling)
+**¿Qué es?** Es un proceso estructurado para identificar qué puede ir mal en un sistema antes de que ocurra. Es "hackear" el diseño en papel para encontrar debilidades.
+
+#### Metodología STRIDE (¿Qué puede pasar?)
+Es un acrónimo para clasificar tipos de ataques:
+- **S**poofing (Suplantación): Hacerse pasar por otro.
+- **T**ampering (Manipulación): Modificar datos o código.
+- **R**epudiation (Repudio): Negar haber hecho una acción.
+- **I**nformation Disclosure (Fuga de datos): Ver lo que no te toca.
+- **D**enial of Service (DoS): Bloquear el sistema.
+- **E**levation of Privilege: Ser administrador siendo usuario normal.
+
+#### Metodología DREAD (¿Cómo de grave es?)
+Se usa para puntuar el riesgo (1-10):
+- **D**amage: Daño causado.
+- **R**eproducibility: Facilidad para repetirlo.
+- **E**xploitability: Facilidad para ejecutarlo.
+- **A**ffected Users: Cuánta gente sufre.
+- **D**iscoverability: Facilidad para encontrar el fallo.
+
+---
 *(Documento en constante actualización según avancemos en el repaso)*

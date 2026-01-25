@@ -51,6 +51,11 @@ Estas vulnerabilidades ocurren cuando los flujos legítimos de la aplicación se
     - **Falta de Límites:** Permitir acciones infinitas (fuerza bruta, agotamiento de stock).
 - **Defensa:** Implementar **Modelado de Amenazas** y validar la autorización en cada paso del flujo.
 
+### 🏛️ Ejemplo Práctico: Modelado de Amenazas
+Para entender cómo prevenir fallos de lógica de negocio, hemos creado un modelo de ejemplo basado en un proceso de compra:
+*   **Documento:** [Modelado de Amenazas (STRIDE/DREAD)](./labs/Ejemplo-Modelado-Amenazas.md)
+*   **Conceptos Clave:** Suplantación, Manipulación, Repudio, Fuga de información, DoS y Elevación de privilegios.
+
 ---
 
 ## 💉 6.4: Vulnerabilidades Basadas en Inyección
