@@ -20,6 +20,10 @@ Este repositorio contiene materiales detallados de estudio, mapas mentales y doc
 - **Autenticación y Sesiones:** Guías sobre Fuerza Bruta, Session Hijacking y ataques a Kerberos.
 - **Lógica de Negocio:** Vulnerabilidades de diseño y flujo.
 
+## 🧠 Recursos de Aprendizaje Especializados
+
+- **[FAQ y Conceptos Detallados](./FAQ_CONCEPTOS.md):** Una guía profunda sobre las dudas que surgen durante el estudio, con explicaciones detalladas sobre conceptos como *Stack Traces*, *Fingerprinting* y lógica interna de las vulnerabilidades detectadas.
+
 ## 🛠️ Laboratorios Incluidos
 
 El repositorio integra ejemplos reales de explotación realizados en entornos controlados:
