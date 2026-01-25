@@ -49,4 +49,35 @@ Se usa para puntuar el riesgo (1-10):
 - **D**iscoverability: Facilidad para encontrar el fallo.
 
 ---
+
+## 💉 Vulnerabilidades de Inyección y Scripting
+
+### 3. SQL Injection (Bypass de Login)
+**¿Qué pasó exactamente?** 
+El servidor tiene una "llave" lógica para dejarte entrar. La consulta suele ser: "Déjalo pasar si el email es X Y la contraseña es Y".
+
+**El Truco del Payload (`' or 1=1--`):**
+1.  **La Comilla (`'`):** Rompe la frase original del servidor.
+2.  **La Lógica (`or 1=1`):** Añadimos una condición que **siempre es verdadera**. Es como decirle al portero: "Déjame pasar si tengo la invitación O si el sol sale por el este". Como el sol siempre sale por el este, la invitación ya no importa.
+3.  **El Comentario (`--`):** Le dice al servidor que ignore el resto de la frase original (donde pedía la contraseña).
+- **Resultado:** Entras como el primer usuario de la base de datos (normalmente el admin) sin saber un solo carácter de su password.
+
+### 4. XSS Reflejado vs DOM-based
+
+#### A. XSS Reflejado (El "Megáfono")
+**Mecánica:** Tú le envías un script al servidor (vía URL) y el servidor, como un megáfono, lo repite de vuelta en el HTML para que tu navegador lo ejecute.
+
+**Bypass de filtros (`<img src=x onerror=...>`)**: 
+Muchos filtros buscan la palabra `<script>`. Al usar una etiqueta de imagen con una ruta rota (`src=x`), forzamos al navegador a ejecutar el "Plan B" (el evento `onerror`), que es donde escondemos nuestro código malicioso. Es un caballo de Troya para saltar protecciones básicas.
+
+#### B. DOM-based XSS (El "Encargo al Mayordomo")
+**La gran diferencia:** En el XSS Reflejado, el servidor ve el ataque. En el **DOM-based**, ¡el servidor no se entera de nada!
+
+**Por qué no llega al servidor:**
+El payload suele ir después de un símbolo `/#/`. Todo lo que va tras el `#` es para el navegador (el cliente), no para el servidor. 
+- El servidor entrega una página "limpia" con Javascript.
+- Ese Javascript del cliente lee la URL, coge tu código malicioso y lo inyecta directamente en la página (el DOM). 
+- **Metáfora:** Es como dejarle una nota al mayordomo (navegador) para que cambie los cuadros de la casa mientras el dueño (servidor) está durmiendo y no ve quién entra.
+
+---
 *(Documento en constante actualización según avancemos en el repaso)*
