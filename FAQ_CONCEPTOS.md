@@ -162,5 +162,13 @@ Imagina que un inspector revisa billetes. Solo permite pasar a los que van a "Ma
 **¿Para qué sirve?**
 -   **Bypass de Extensiones:** Descargar archivos de configuración, backups o bases de datos (ej: `.kdbx`, `.yml`, `.env`) saltándose filtros que solo permiten imágenes o documentos.
 
+### 8. Clickjacking (Secuestro de Click)
+**¿Qué pasó exactamente?**
+El atacante "engaña" al usuario para que haga clic en algo que no ve. Coloca la web legítima dentro de un marco invisible (iframe) encima de una web maliciosa.
+
+**La Metáfora: El Botón Fantasma.**
+Imagina que estás en una feria y ves un botón rojo gigante que dice "Ganar Premio Gratis". Tú pulsas el botón emocionado. Lo que no ves es que encima de ese botón hay una lámina de cristal invisible que tiene pegado otro botón: "Transferir todo mi dinero". Al pulsar el premio, en realidad has pulsado el botón invisible de transferencia.
+- **Defensa:** Usar cabeceras como `X-Frame-Options` para prohibir que tu web se meta dentro de marcos ajenos.
+
 ---
 *(Documento en constante actualización según avancemos en el repaso)*

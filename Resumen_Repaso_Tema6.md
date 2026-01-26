@@ -243,6 +243,37 @@ En nuestras sesiones (ver [Laboratorio-Pentesting-01.md](./labs/Laboratorio-Pent
 
 ---
 
-## 🕒 Siguiente Tema: 6.7 Explotando Vulnerabilidades de Configuración y Componentes
+## ⚙️ 6.7: Explotando Vulnerabilidades de Configuración y Componentes
+
+Esta sección se centra en cómo las debilidades en la infraestructura y la falta de mantenimiento de las librerías pueden comprometer una aplicación entera.
+
+### 🗺️ Mapa Mental: Configuración y Componentes
+![Configuración y Componentes](./assets/img/mindmap_configuracion_componentes.png)
+
+### Resumen Técnico:
+
+1.  **Security Misconfiguration (Configuración Incorrecta - OWASP A05):**
+    *   **Concepto:** Ajustes de seguridad débiles, incompletos o por defecto en el servidor o la aplicación que amplían la superficie de ataque.
+    *   **Ejemplo:** Dejar habilitado el **Directory Listing**, permitiendo que un atacante navegue por las carpetas del servidor y encuentre archivos `.bak` o `.env`.
+2.  **Cabeceras de Seguridad (Security Headers):**
+    *   **Concepto:** Ausencia de directivas HTTP que protegen al usuario frente a ataques de lado del cliente.
+    *   **Ejemplo:** No configurar `X-Frame-Options`, lo que permite que el sitio sea víctima de **Clickjacking** (cargar la web en un iframe invisible para engañar al usuario).
+3.  **Componentes Vulnerables y Obsoletos (OWASP A06):**
+    *   **Concepto:** Uso de bibliotecas (JS, APIs) o frameworks que tienen vulnerabilidades públicas conocidas (CVEs) y no han sido actualizados.
+    *   **Ejemplo:** Mantener una versión antigua de **jQuery** que es vulnerable a XSS o ejecución remota de código.
+4.  **Credenciales por Defecto y Servicios Innecesarios:**
+    *   **Concepto:** Mantener contraseñas de fábrica o servicios activos (FTP, SSH) que no son necesarios para la aplicación web.
+    *   **Ejemplo:** Acceder al panel de administración de la base de datos o el CMS usando `admin / admin`.
+
+---
+
+### 🛠️ Ejemplo Práctico de Laboratorio (Juice Shop)
+En nuestras sesiones (ver [Laboratorio-Pentesting-01.md](./labs/Laboratorio-Pentesting-01.md)):
+*   **VULN-05 (Security Misconfiguration):** El listado de directorios y el acceso al Scoreboard oculto son ejemplos directos de esta categoría.
+*   **Información de Versión:** Al provocar un error, el servidor reveló que usaba `Express ^4.21.0`, lo cual es una **fuga de información** típica de configuraciones incorrectas que ayuda al atacante a buscar exploits específicos.
+
+---
+
+## 🕒 Siguiente Tema: 6.8 Explotando Vulnerabilidades de Almacenamiento y Web Services
 *(Pendiente de desarrollar...)*
 
