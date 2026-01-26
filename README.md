@@ -1,39 +1,77 @@
-# 🛡️ Cisco Ethical Hacker - Repaso de Vulnerabilidades Web
+# 🛡️ Explotando Vulnerabilidades Basadas en Aplicaciones
 
-Este repositorio contiene materiales detallados de estudio, mapas mentales y documentación de laboratorios prácticos sobre el **Tema 6: Explotación de Vulnerabilidades Basadas en Aplicaciones** del curso Cisco Ethical Hacker.
+> **Cisco Ethical Hacker - Profundización en el Tema 6**
 
-## 🚀 Estructura del Proyecto
-
-```text
-.
-├── assets/
-│   └── img/                    # Mapas mentales y recursos visuales
-├── labs/                       # Documentación de laboratorios prácticos (Juice Shop, DVWA, WebGoat)
-├── Resumen_Repaso_Tema6.md      # Documento principal de estudio y teoría
-└── README.md                   # Guía del repositorio
-```
-
-## 📚 Contenido Destacado
-
-- **OWASP Top 10:** Análisis de los riesgos más críticos en la web moderna.
-- **Inyecciones:** Casos prácticos de SQLi, Command Injection y LDAP.
-- **Autenticación y Sesiones:** Guías sobre Fuerza Bruta, Session Hijacking y ataques a Kerberos.
-- **Lógica de Negocio:** Vulnerabilidades de diseño y flujo.
-
-## 🧠 Recursos de Aprendizaje Especializados
-
-- **[FAQ y Conceptos Detallados](./FAQ_CONCEPTOS.md):** Una guía profunda sobre las dudas que surgen durante el estudio, con explicaciones detalladas sobre conceptos como *Stack Traces*, *Fingerprinting* y lógica interna de las vulnerabilidades detectadas.
-
-## 🛠️ Laboratorios Incluidos
-
-El repositorio integra ejemplos reales de explotación realizados en entornos controlados:
-- **OWASP Juice Shop:** Explotación de XSS, SQLi y exfiltración de datos.
-- **DVWA:** Demostración de ataques de fuerza bruta con Hydra.
-- **WebGoat:** Ejercicios de DOM-based XSS.
-
-## 🧠 Mapas Mentales
-
-Cada sección incluye un mapa mental visual de alta resolución para facilitar el repaso rápido de conceptos clave. Se encuentran en el directorio `assets/img/`.
+Este repositorio es una recopilación avanzada de recursos teóricos, prácticos y visuales diseñados para dominar la identificación y explotación de vulnerabilidades en aplicaciones web y de escritorio, siguiendo el currículo de **Cisco Ethical Hacker**.
 
 ---
-*Este material ha sido generado como parte del proceso de formación en Hacking Ético 2026.*
+
+## 👨‍💻 Autores
+Este proyecto ha sido desarrollado con rigor técnico y pasión por la ciberseguridad por:
+*   **Michel Macias** - *Administrador de Sistemas e Investigador de Seguridad*
+*   **Antigravity (Google CI)** - *Mentor y Asistente Técnico IA*
+
+---
+
+## 🚀 Vision General
+El objetivo de este repositorio es proporcionar una ruta de aprendizaje estructurada sobre el **Tema 6: Explotación de Vulnerabilidades Basadas en Aplicaciones**. No se trata solo de conocer las vulnerabilidades, sino de entender su lógica interna, cómo detectarlas y cómo mitigarlas eficazmente.
+
+[![Cybersecurity](https://img.shields.io/badge/Focus-Cybersecurity-red.svg?style=for-the-badge&logo=opsgenie)](https://github.com/MaciasIT)
+[![Cisco](https://img.shields.io/badge/Certification-Cisco_Ethical_Hacker-blue.svg?style=for-the-badge&logo=cisco)](https://www.netacad.com/)
+[![License](https://img.shields.io/badge/License-Educational-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
+---
+
+## � Estructura del Ecosistema
+
+```bash
+.
+├── 📁 assets/
+│   └── 📁 img/                      # 🧠 Mapas mentales de alta resolución
+├── 📁 labs/                        # 🛠️ Guías de laboratorios (Juice Shop, DVWA, etc.)
+├── 📄 Resumen_Repaso_Tema6.md       # 📚 El "Manual de Combate" teórico
+├── 📄 FAQ_CONCEPTOS.md              # ❓ Resolviendo dudas técnicas profundas
+└── 📄 GUIA_CONTINUACION.md          # 🗺️ Roadmap de aprendizaje
+```
+
+---
+
+## 🧠 Mapas Mentales (Visual Learning)
+La comprensión visual es clave en el hacking ético. Hemos desarrollado una serie de mapas mentales que desglosan cada categoría de vulnerabilidad:
+
+| Categoría | Recurso Visual |
+| :--- | :--- |
+| **Visión General Ch. 6** | [Ver Mapa](./assets/img/mindmap_ethical_hacker_ch6.png) |
+| **OWASP Top 10** | [Ver Mapa](./assets/img/mindmap_owasp_top10_espanol.png) |
+| **Inyecciones (SQLi, LDAP)** | [Ver Mapa](./assets/img/mindmap_inyeccion_espanol.png) |
+| **Autenticación** | [Ver Mapa](./assets/img/mindmap_autenticacion_espanol.png) |
+| **Autorización** | [Ver Mapa](./assets/img/mindmap_autorizacion_espanol.png) |
+| **Lógica de Negocio** | [Ver Mapa](./assets/img/mindmap_logica_negocio_espanol.png) |
+| **Modelado de Amenazas** | [Ver Mapa](./assets/img/mindmap_modelado_amenazas_espanol.png) |
+
+> *Nota: Puedes encontrar todos los originales en alta resolución en la carpeta `/assets/img/`.*
+
+---
+
+## 🛠️ Laboratorios de Práctica Real
+El aprendizaje se consolida en la práctica. Este repo documenta la explotación en entornos controlados:
+
+*   **[OWASP Juice Shop](./labs/Laboratorio-Pentesting-01.md):** Inyecciones, XSS y manipulación de parámetros en aplicaciones modernas.
+*   **[DVWA (Damn Vulnerable Web App)](./labs/Laboratorio-DVWA.md):** Ataques de fuerza bruta con Hydra y gestión de sesiones.
+*   **[Threat Modeling](./labs/Ejemplo-Modelado-Amenazas.md):** Análisis preventivo de superficies de ataque.
+
+---
+
+## 📑 Contenido Teórico Destacado
+*   **Análisis de Fingerprinting:** Técnicas de reconocimiento pasivo y activo.
+*   **Vulnerabilidades de Client-Side vs Server-Side:** Entendiendo el flujo de datos.
+*   **Broken Access Control:** Cómo los pillos saltan las vallas lógicas.
+*   **Seguridad en API REST:** Desafíos modernos en la comunicación entre servicios.
+
+---
+
+## ⚖️ Descargo de Responsabilidad (Disclaimer)
+Este material tiene fines **estrictamente educativos** y de formación ética. El acceso no autorizado a sistemas informáticos es un delito. Utiliza estos conocimientos siempre dentro de marcos legales, con autorización previa o en entornos de laboratorio controlados.
+
+---
+*Hecho con ❤️ en el entorno de Google Deepmind por Antigravity y Michel Macias.*
