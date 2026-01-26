@@ -107,13 +107,17 @@ Vas a un guardarropa y entregas tu ticket con el número 100. El empleado te da 
 - **Impacto:** Puedes "robar" las chaquetas (datos) de todos los asistentes solo cambiando el número del ticket.
 
 ### 7. HPP (HTTP Parameter Pollution)
-**¿Qué pasó exactamente?**
-Se envían múltiples valores para un mismo parámetro para confundir a la aplicación.
+**¿Qué es?** Consiste en enviar múltiples parámetros con el mismo nombre (`?id=1&id=2`) para confundir la lógica del servidor o saltarse protecciones (WAF).
 
-**La Metáfora: El Pedido Confuso.**
-Pides una pizza por una app y en el campo "Dirección" pones: `Mi casa` AND `Casa del vecino`. 
-- Si la app del restaurante solo lee la primera dirección pero el sistema de reparto lee la última, la pizza podría acabar donde no debe, o podrías saltarte una validación de "zona de entrega" engañando a uno de los dos sistemas.
-- **Impacto:** Bypass de WAFs (Web Application Firewalls) o de lógica de negocio que solo valida el primer parámetro pero procesa el último.
+**Comportamiento técnico (Crucial para examen):**
+Cada servidor interpreta la colisión de parámetros de forma distinta:
+-   **PHP / Apache:** Se queda con el **último** valor recibido.
+-   **JSP / Tomcat:** Se queda con el **primer** valor recibido.
+-   **ASP.NET:** Los **concatena** (ej: `1,2`).
+
+**¿Para qué sirve?**
+-   **Bypass de WAF:** El Firewall puede que solo analice el primer `id` (buscando SQLi), pero si el servidor final procesa el segundo, hemos colado el ataque.
+-   **Bypass de Lógica:** Engañar a sistemas que validan una condición en el primer parámetro pero ejecutan la acción sobre el segundo.
 
 ---
 

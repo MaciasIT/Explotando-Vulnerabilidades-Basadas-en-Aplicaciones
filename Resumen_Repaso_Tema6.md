@@ -214,7 +214,7 @@ Mientras que la autenticación verifica quién eres, la **autorización** decide
 
 ---
 
-### 🧪 6.6.2: Contaminación de Parámetros (HPP)
+### 🧪 6.6.2: [Contaminación de Parámetros (HPP)](./FAQ_CONCEPTOS.md#7-hpp-http-parameter-pollution)
 *   **Concepto:** Consiste en enviar múltiples parámetros con el mismo nombre en una petición (`?user=1&user=2`) para confundir la lógica de procesamiento del servidor.
 *   **Ejemplo:** En un sistema de transferencia, enviar `to=cuenta1&to=cuentaAtacante`. Si el banco valida la primera pero envía a la segunda, se ha cometido el fraude.
 
