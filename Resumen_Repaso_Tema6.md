@@ -166,6 +166,46 @@ Las contraseñas no se guardan en texto plano, sino como **hashes**.
 
 ---
 
-## 🕒 Siguiente Tema: 6.6 Explotando Vulnerabilidades de Autorización
+## 🔐 6.6: Explotando Vulnerabilidades de Autorización
+
+Mientras que la autenticación verifica quién eres, la **autorización** decide qué puedes hacer. Los fallos aquí permiten a los atacantes acceder a datos de otros usuarios o funciones administrativas.
+
+### 🗺️ Mapa Mental: Autorización
+![Autorización](./assets/img/mindmap_autorizacion_espanol.png)
+
+### 📋 Conceptos Fundamentales (6.6.1)
+*   **AuthN vs AuthZ**: El fallo de autorización ocurre cuando un usuario ya identificado (AuthN) salta los límites impuestos por el sistema (AuthZ).
+*   **Broken Access Control**: Un término general para cuando las restricciones de acceso no se aplican correctamente.
+
+---
+
+### 🧪 6.6.2: Contaminación de Parámetros (HPP)
+El **HTTP Parameter Pollution** consiste en enviar múltiples parámetros con el mismo nombre en una petición para confundir al servidor.
+*   **Mecánica**: `request.php?user=victima&user=atacante`.
+*   **Impacto**: Dependiendo de la tecnología (PHP, ASP.NET, etc.), el servidor puede procesar el primer valor, el último o ambos, permitiendo en ocasiones bypass de filtros o lógica de negocio.
+
+---
+
+### 🪜 6.6.3: Escalada de Privilegios
+*   **Escalada Horizontal**: El atacante accede a recursos de un usuario con su mismo nivel de privilegios (ej: leer los mensajes privados de otro cliente).
+*   **Escalada Vertical**: El atacante obtiene privilegios superiores (ej: un usuario normal que logra acceder al panel `admin`).
+
+---
+
+### 🔍 6.6.4: IDOR (Insecure Direct Object Reference)
+Es una de las vulnerabilidades más comunes y peligrosas. Ocurre cuando la aplicación usa un identificador para acceder directamente a un objeto sin validar los permisos.
+*   **Vector Típico**: Manipulación de IDs en la URL o en el cuerpo de la petición.
+*   **Ejemplo**: Cambiar `?invoice_id=100` por `?invoice_id=101` para ver la factura de otro cliente.
+
+---
+
+### 🛠️ Ejemplo Práctico de Laboratorio (Juice Shop)
+En nuestras sesiones (ver [Laboratorio-Pentesting-01.md](./labs/Laboratorio-Pentesting-01.md)):
+*   **Broken Access Control (Directorio FTP):** Acceso a archivos sensibles mediante navegación directa y bypass de filtros con **Null Byte Injection** (`%2500.md`).
+*   **Insecure Direct Object Reference:** Aunque no lo documentamos explícitamente como "IDOR", el acceso directo a `/ftp` y archivos del sistema sin control de sesión es un ejemplo claro de falta de control de acceso a objetos.
+
+---
+
+## 🕒 Siguiente Tema: 6.7 Explotando Vulnerabilidades de Configuración y Componentes
 *(Pendiente de desarrollar...)*
 

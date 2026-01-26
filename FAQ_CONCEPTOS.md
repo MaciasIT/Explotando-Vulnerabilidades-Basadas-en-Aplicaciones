@@ -97,5 +97,23 @@ Imagina que entras en un festival tras enseñar tu DNI (login). Te ponen una **p
 3.  **La Acción:** El navegador de la víctima, sin que ella lo sepa, hace una petición al buzón del atacante enviándole su "pulsera VIP" (`document.cookie`) en la URL.
 4.  **El Resultado:** El atacante mira su terminal de `netcat`, ve la cookie, se la pone en su propio navegador y ¡listo! Ya está dentro de la cuenta de la víctima.
 
+### 6. IDOR (Insecure Direct Object Reference)
+**¿Qué pasó exactamente?**
+El sistema te da un recurso (una factura, un archivo) basándose solo en un número o ID que tú le pasas, confiando ciegamente en que tienes permiso para verlo solo porque "lo has pedido".
+
+**La Metáfora: El Guardarropa.**
+Vas a un guardarropa y entregas tu ticket con el número 100. El empleado te da tu chaqueta. Pero, ¿qué pasa si tú mismo tachas el 100 y pones 101? 
+- Si el empleado te da la chaqueta 101 sin comprobar si realmente es tuya, estamos ante un **IDOR**.
+- **Impacto:** Puedes "robar" las chaquetas (datos) de todos los asistentes solo cambiando el número del ticket.
+
+### 7. HPP (HTTP Parameter Pollution)
+**¿Qué pasó exactamente?**
+Se envían múltiples valores para un mismo parámetro para confundir a la aplicación.
+
+**La Metáfora: El Pedido Confuso.**
+Pides una pizza por una app y en el campo "Dirección" pones: `Mi casa` AND `Casa del vecino`. 
+- Si la app del restaurante solo lee la primera dirección pero el sistema de reparto lee la última, la pizza podría acabar donde no debe, o podrías saltarte una validación de "zona de entrega" engañando a uno de los dos sistemas.
+- **Impacto:** Bypass de WAFs (Web Application Firewalls) o de lógica de negocio que solo valida el primer parámetro pero procesa el último.
+
 ---
 *(Documento en constante actualización según avancemos en el repaso)*
