@@ -138,4 +138,25 @@ Imagina que envías una carta.
 -   **Seguridad en APIs:** Asegurar que las peticiones entre servidores no han sido manipuladas por un intermediario (MitM).
 
 ---
+
+## 📂 Manipulación de Rutas y Archivos
+
+### 9. Null Byte Injection (Inyección de Byte Nulo)
+**¿Qué es?** Es una técnica que utiliza el carácter nulo (`\0` o `%00`) para engañar a los filtros de una aplicación y acceder a archivos o rutas que deberían estar prohibidas.
+
+**La Metáfora: El Inspector de Trenes Despistado.**
+Imagina que un inspector revisa billetes. Solo permite pasar a los que van a "Madrid".
+1.  **El Truco:** Tú tienes un billete que dice "Secreto.zip[NULO]Madrid". 
+2.  **La Aplicación (Inspector moderno):** Mira el final de la frase. "Ah, pone Madrid al final, puedes pasar".
+3.  **El Sistema (Inspector antiguo/SO):** Mira la frase de izquierda a derecha. Cuando llega al "[NULO]", deja de leer y piensa: "Este billete es para Secreto.zip". 
+4.  **Resultado:** Te deja entrar al vagón de "Secreto.zip" aunque el inspector de la puerta creía que ibas a "Madrid".
+
+**¿Cómo funciona técnicamente?**
+1.  **Diferencia de Lenguajes:** Lenguajes como JavaScript (Node.js) gestionan cadenas por su longitud. Lenguajes como C (en los que suelen estar escritos el Kernel y los sistemas de archivos) terminan de leer cuando encuentran un byte cero (`0x00`).
+2.  **El Ataque:** Inyectas el byte nulo en la URL (ej: `archivo.conf%00.pdf`). El filtro de la web ve `.pdf` y lo acepta. El servidor, al intentar abrirlo, para de leer en el `%00` e intenta abrir `archivo.conf`.
+
+**¿Para qué sirve?**
+-   **Bypass de Extensiones:** Descargar archivos de configuración, backups o bases de datos (ej: `.kdbx`, `.yml`, `.env`) saltándose filtros que solo permiten imágenes o documentos.
+
+---
 *(Documento en constante actualización según avancemos en el repaso)*

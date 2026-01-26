@@ -63,13 +63,18 @@ Estas vulnerabilidades ocurren cuando los flujos legítimos de la aplicación se
 ![Lógica de Negocio](./assets/img/mindmap_logica_negocio_espanol.png)
 
 ### Resumen Técnico:
-- **Naturaleza:** No son errores de codificación sintáctica, sino de diseño de procesos.
-- **Detección:** Los escáneres automáticos no suelen detectarlos. Requiere **pruebas manuales**.
-- **Ejemplos Críticos:**
-    - **Propiedad no verificada:** Cambiar IDs en parámetros para acceder a datos ajenos.
-    - **Salto de Flujo:** Ir directamente a la página de éxito sin realizar la acción requerida.
-    - **Falta de Límites:** Permitir acciones infinitas (fuerza bruta, agotamiento de stock).
-- **Defensa:** Implementar **Modelado de Amenazas** y validar la autorización en cada paso del flujo.
+1.  **Naturaleza de la Lógica de Negocio:**
+    *   **Concepto:** Vulnerabilidades que no nacen de errores de código técnicos, sino de fallos en el diseño de los procesos y funciones de la aplicación.
+    *   **Ejemplo:** Un sistema de recompensas que permite canjear el mismo código infinitas veces porque el servidor no marca el cupón como "usado" hasta el final del proceso.
+2.  **Propiedad no Verificada:**
+    *   **Concepto:** El servidor confía en que el usuario solo pedirá datos que le pertenecen.
+    *   **Ejemplo:** Un usuario cambia su propio ID en la URL para ver el perfil de otro usuario sin que el sistema verifique la relación de propiedad.
+3.  **Salto de Flujo (Step Skipping):**
+    *   **Concepto:** Saltarse pasos obligatorios en una secuencia lógica (como una pasarela de pago).
+    *   **Ejemplo:** Navegar directamente a `confirmacion_pedido.php` sin haber pasado por el pago, logrando que el sistema procese el envío.
+4.  **Falta de Límites y Agotamiento:**
+    *   **Concepto:** No imponer restricciones sobre cuántas veces o con qué frecuencia se puede realizar una acción.
+    *   *Ejemplo:** Permitir que un script añada 1 millón de productos al carrito, agotando el stock virtual y bloqueando a otros compradores.
 
 ### 🏛️ Ejemplo Práctico: Modelado de Amenazas
 Para entender cómo prevenir fallos de lógica de negocio, hemos creado un modelo de ejemplo basado en un proceso de compra:
@@ -87,20 +92,15 @@ Ocurren cuando se envían datos no confiables a un intérprete. Es uno de los ve
 
 ### Resumen Técnico:
 
-#### 1. Inyección SQL (SQLi)
-El atacante interfiere con las consultas que una aplicación hace a su base de datos.
-- **Categorías:**
-    - **In-band (En banda):** El atacante usa el mismo canal para el ataque y los resultados (ej: `UNION`, errores visibles).
-    - **Blind (Ciega):** No hay salida de datos directa. Se infiere información mediante respuestas booleanas o tiempos de espera (`Time-based`).
-    - **Out-of-band (Fuera de banda):** Se extraen datos a través de otros protocolos (DNS, HTTP) si el servidor puede hacer peticiones externas.
-
-#### 2. Inyección de Comandos (OS Command Injection)
-Ejecución de comandos del sistema operativo a través de la aplicación vulnerable.
-- **Ejemplo:** `ping 127.0.0.1 ; cat /etc/passwd`
-- **Diferencia clave:** No es lo mismo que inyección de código (que afecta al lenguaje de programación como PHP o Python).
-
-#### 3. Inyección LDAP
-Ataques dirigidos a servicios de directorio (Active Directory) para saltar la autenticación o extraer datos de usuarios/grupos.
+1.  **Inyección SQL (SQLi):**
+    *   **Concepto:** Interferencia con las consultas que la aplicación realiza a la base de datos para extraer o manipular información.
+    *   **Ejemplo:** Usar `' OR 1=1--` en un campo de texto para engañar al servidor y que devuelva registros de todos los usuarios.
+2.  **Inyección de Comandos (OS Command Injection):**
+    *   **Concepto:** El atacante logra ejecutar comandos directamente en el sistema operativo del servidor.
+    *   **Ejemplo:** En un formulario de "ping", enviar `127.0.0.1; rm -rf /` para intentar borrar archivos del servidor.
+3.  **Inyección LDAP:**
+    *   **Concepto:** Manipulación de consultas a servicios de directorio para saltar autenticaciones o listar usuarios del dominio.
+    *   **Ejemplo:** Inyectar caracteres especiales en un campo de búsqueda de empleados para extraer la estructura interna del Active Directory.
 
 ### 🛡️ Defensas Críticas:
 - **Consultas Preparadas (Prepared Statements):** Es la defensa #1 contra SQLi.
@@ -126,25 +126,35 @@ Los atacantes buscan eludir los mecanismos de control de acceso para suplantar i
 
 ### 📋 Descripción General (6.5.1)
 Los vectores principales incluyen:
-*   **Fuerza Bruta:** Intentos automatizados de adivinar credenciales.
-*   **Secuestro de Sesiones:** Robo de tokens activos.
-*   **Redireccionamiento Inseguro:** Manipulación de URLs para phishing o malware.
-*   **Credenciales por Defecto:** Uso de passwords de fábrica en infraestructura.
-*   **Vulnerabilidades de Kerberos:** Ataques avanzados en entornos Windows/AD.
+1.  **Fuerza Bruta:** 
+    *   **Concepto:** Intentos automatizados y masivos para adivinar credenciales probando miles de combinaciones.
+    *   **Ejemplo:** Usar un diccionario de contraseñas comunes contra una cuenta de administrador.
+2.  **Secuestro de Sesiones (Session Hijacking):** 
+    *   **Concepto:** Robo de un token o cookie de sesión activa para suplantar al usuario sin conocer su contraseña.
+    *   **Ejemplo:** Capturar la cookie `PHPSESSID` de un usuario en una red pública no cifrada.
+3.  **Redireccionamiento Inseguro:** 
+    *   **Concepto:** Manipulación de parámetros de URL para enviar al usuario a un sitio malicioso manteniendo la confianza del dominio original.
+    *   **Ejemplo:** `?url=http://mi-sitio-phishing.com` en un script de redirección de la empresa.
+4.  **Credenciales por Defecto:** 
+    *   **Concepto:** Acceso a sistemas utilizando las contraseñas que vienen de fábrica de los fabricantes.
+    *   **Ejemplo:** Loguearse en un router de oficina con `admin/admin` porque nadie cambió la clave inicial.
+5.  **Ataques a Kerberos:** 
+    *   **Concepto:** Explotación del protocolo de autenticación de Windows/Active Directory.
+    *   **Ejemplo:** Crear un **Golden Ticket** tras comprometer la cuenta `KRBTGT` para obtener persistencia total en el dominio.
 
 ---
 
 ### 🍪 6.5.2: Secuestro de Sesión (Session Hijacking)
 *   **Concepto:** Una vez que un usuario se autentica, el **ID de Sesión (Cookie/Token)** se convierte en su "llave" de acceso. Si el atacante la roba, no necesita la contraseña.
-*   **Etapas de la Sesión:** Preautenticación -> Autenticación -> Gestión de Sesión -> Control de Acceso -> Finalización.
-*   **Riesgo:** Si las cookies no tienen atributos de seguridad (`HttpOnly`, `Secure`), son vulnerables a ataques como XSS.
+*   **Ejemplo:** Un atacante intercepta una cookie `session_id=abc123` y la inserta en su propio navegador para suplantar al usuario sin pasar por el login.
+*   **Mitigación:** Usar atributos `HttpOnly` (previene robo vía JS) y `Secure` (solo viaja por HTTPS).
 
 ---
 
 ### ↪️ 6.5.4: Ataques de Redireccionamiento
-*   **Vulnerabilidad:** "Unvalidated Redirects and Forwards".
-*   **Mecánica:** La aplicación redirige a una URL proporcionada por un parámetro sin validar (ej: `?url=http://malicioso.com`).
-*   **Uso:** Phishing y bypass de controles de seguridad basados en dominios de confianza.
+*   **Concepto (Unvalidated Redirects):** La aplicación redirige a una URL externa basada en un parámetro que el usuario puede controlar.
+*   **Ejemplo:** `tienda-oficial.com/redirect?target=http://sitio-malvado.com`. El usuario confía en el dominio inicial pero termina en una web de phishing.
+*   **Impacto:** Facilita ataques de Phishing creíbles y robo de credenciales.
 
 ---
 
@@ -157,21 +167,22 @@ Los vectores principales incluyen:
 ---
 
 ### 🎫 6.5.6: Vulnerabilidades de Kerberos
-Ataques críticos en infraestructuras de dominio:
-1.  **Golden Ticket:** Acceso total y persistente tras comprometer el hash de la cuenta `KRBTGT`.
-2.  **Delegación no restringida:** Permite que un servidor comprometido use las credenciales de un usuario para autenticarse ante otros servicios en su nombre.
+1.  **Golden Ticket:**
+    *   **Concepto:** Ticket de autenticación forjado que otorga acceso total y persistente a un dominio de Windows/AD.
+    *   **Ejemplo:** Un atacante que ha comprometido el hash de la cuenta `KRBTGT` puede generar tickets válidos para cualquier usuario durante años.
+2.  **Delegación no Restringida:**
+    *   **Concepto:** Un servidor tiene permiso para impersonar a cualquier usuario ante cualquier servicio del dominio.
+    *   **Ejemplo:** Si un servidor web está comprometido, el atacante puede usar las credenciales de un usuario que se haya logueado para acceder a la base de datos en su nombre.
 
 ---
 
 ### 🔨 6.5.8: Gestión y Herramientas de Contraseñas
-Las contraseñas no se guardan en texto plano, sino como **hashes**.
-*   **Tipos de Ataque:**
-    *   **Diccionario:** Probar palabras comunes.
-    *   **Fuerza Bruta:** Probar todas las combinaciones posibles.
-    *   **Tablas Arcoíris (Rainbow Tables):** Hashes precalculados para acelerar el cracking (utilizado por herramientas como **RainbowCrack**).
-*   **Herramientas Estrella:**
-    *   **hashcat:** Líder en cracking basado en GPU.
-    *   **John the Ripper:** Versatilidad y soporte para múltiples formatos.
+1.  **Tablas Arcoíris (Rainbow Tables):** 
+    *   **Concepto:** Bases de datos de hashes precalculados que permiten revertir un hash a texto plano de forma casi instantánea.
+    *   **Ejemplo:** Usar **RainbowCrack** para descifrar un hash SHA-1 en segundos comparándolo con una tabla pre-generada.
+2.  **Ataque de Diccionario vs Fuerza Bruta:**
+    *   **Concepto:** El diccionario prueba palabras reales; la fuerza bruta prueba todas las combinaciones matemáticas posibles.
+    *   **Ejemplo:** Probar "admin123" (Diccionario) vs probar cada combinación de 8 caracteres (Fuerza Bruta).
 
 ### 🛠️ Ejemplo Práctico de Laboratorio (DVWA & Juice Shop)
 *   **Fuerza Bruta (Hydra):** (Ver guion completo en [Guion-Demo-BruteForce.md](./labs/Guion-Demo-BruteForce.md))
@@ -194,28 +205,34 @@ Mientras que la autenticación verifica quién eres, la **autorización** decide
 ![Autorización](./assets/img/mindmap_autorizacion_espanol.png)
 
 ### 📋 Conceptos Fundamentales (6.6.1)
-*   **AuthN vs AuthZ**: El fallo de autorización ocurre cuando un usuario ya identificado (AuthN) salta los límites impuestos por el sistema (AuthZ).
-*   **Broken Access Control**: Un término general para cuando las restricciones de acceso no se aplican correctamente.
+1.  **AuthN vs AuthZ:**
+    *   **Concepto:** La Autenticación (AuthN) es "quién eres"; la Autorización (AuthZ) es "qué puedes hacer". El fallo ocurre cuando pasas el quién pero no hay control sobre el qué.
+    *   **Ejemplo:** Estás logueado como "Usuario Estándar" pero puedes editar el perfil de otro usuario cambiando el ID en el cuerpo de la petición.
+2.  **Broken Access Control:**
+    *   **Concepto:** Referencia general a cualquier fallo donde se violan los privilegios de acceso.
+    *   **Ejemplo:** Un usuario puede descargar el archivo de configuración del servidor (`/admin.config`) simplemente escribiendo la ruta en el navegador.
 
 ---
 
 ### 🧪 6.6.2: Contaminación de Parámetros (HPP)
-El **HTTP Parameter Pollution** consiste en enviar múltiples parámetros con el mismo nombre en una petición para confundir al servidor.
-*   **Mecánica**: `request.php?user=victima&user=atacante`.
-*   **Impacto**: Dependiendo de la tecnología (PHP, ASP.NET, etc.), el servidor puede procesar el primer valor, el último o ambos, permitiendo en ocasiones bypass de filtros o lógica de negocio.
+*   **Concepto:** Consiste en enviar múltiples parámetros con el mismo nombre en una petición (`?user=1&user=2`) para confundir la lógica de procesamiento del servidor.
+*   **Ejemplo:** En un sistema de transferencia, enviar `to=cuenta1&to=cuentaAtacante`. Si el banco valida la primera pero envía a la segunda, se ha cometido el fraude.
 
 ---
 
 ### 🪜 6.6.3: Escalada de Privilegios
-*   **Escalada Horizontal**: El atacante accede a recursos de un usuario con su mismo nivel de privilegios (ej: leer los mensajes privados de otro cliente).
-*   **Escalada Vertical**: El atacante obtiene privilegios superiores (ej: un usuario normal que logra acceder al panel `admin`).
+1.  **Escalada Horizontal:** 
+    *   **Concepto:** Acceso a datos o funciones de otro usuario que tiene el mismo nivel de permisos que nosotros.
+    *   **Ejemplo:** Un cliente cambia el ID de factura para descargar y ver la factura de otro cliente.
+2.  **Escalada Vertical:** 
+    *   **Concepto:** Un usuario con permisos limitados logra realizar acciones reservadas para roles superiores (como Admin).
+    *   **Ejemplo:** Modificar un parámetro oculto `is_admin=false` a `true` en una petición para acceder al panel de control.
 
 ---
 
 ### 🔍 6.6.4: IDOR (Insecure Direct Object Reference)
-Es una de las vulnerabilidades más comunes y peligrosas. Ocurre cuando la aplicación usa un identificador para acceder directamente a un objeto sin validar los permisos.
-*   **Vector Típico**: Manipulación de IDs en la URL o en el cuerpo de la petición.
-*   **Ejemplo**: Cambiar `?invoice_id=100` por `?invoice_id=101` para ver la factura de otro cliente.
+*   **Concepto:** Ocurre cuando la aplicación muestra identificadores directos a objetos de la base de datos o archivos sin verificar si el usuario tiene permiso sobre ellos.
+*   **Ejemplo:** Acceder a `http://tienda.com/descarga/archivo_105.pdf` cuando solo deberíamos tener acceso al `104`.
 
 ---
 
