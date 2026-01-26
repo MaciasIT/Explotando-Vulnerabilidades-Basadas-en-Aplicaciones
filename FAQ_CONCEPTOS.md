@@ -116,4 +116,26 @@ Pides una pizza por una app y en el campo "Dirección" pones: `Mi casa` AND `Cas
 - **Impacto:** Bypass de WAFs (Web Application Firewalls) o de lógica de negocio que solo valida el primer parámetro pero procesa el último.
 
 ---
+
+## 🛡️ Criptografía y Seguridad de Datos
+
+### 8. HMAC (Hash-based Message Authentication Code)
+**¿Qué es?** Es un código de autenticación que garantiza tanto la **integridad** como la **autenticidad** de un mensaje. Se basa en una función de hash (como SHA-256) combinada con una **clave secreta compartida**.
+
+**La Metáfora: El Sello de Lacre con Firma Secreta.**
+Imagina que envías una carta.
+1.  **Hash normal:** Es como cerrar el sobre. Si alguien lo abre y cambia la carta, el sello se rompe. Pero cualquiera puede poner un sello nuevo.
+2.  **HMAC:** Es como si tú y el destinatario tuvierais un sello con un diseño secreto único que solo vosotros conocéis. Si alguien cambia la carta, no podrá volver a sellarla con el mismo diseño. El destinatario sabrá que la carta fue alterada o que no la enviaste tú.
+
+**¿Cómo funciona técnicamente?**
+1.  **Concatenación:** Se juntan los datos (ej: `id=1&precio=10`).
+2.  **Hashing con Clave:** Se aplica el hash a esos datos "mezclados" con la clave secreta: `Hash(Clave + Mensaje)`.
+3.  **Resultado:** Se genera una cadena alfanumérica única (la "firma").
+4.  **Verificación:** El servidor recibe los datos y la firma. Vuelve a calcular el hash con los datos recibidos y su clave secreta. Si coinciden, los datos son válidos.
+
+**¿Para qué sirve?**
+-   **Firma de Parámetros:** Evitar que un usuario cambie el precio de un producto en la URL o en un formulario.
+-   **Seguridad en APIs:** Asegurar que las peticiones entre servidores no han sido manipuladas por un intermediario (MitM).
+
+---
 *(Documento en constante actualización según avancemos en el repaso)*

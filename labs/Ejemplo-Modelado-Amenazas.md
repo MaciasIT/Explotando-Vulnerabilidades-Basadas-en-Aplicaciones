@@ -47,5 +47,5 @@ Este documento presenta un ejercicio de modelado de amenazas aplicado a una func
 ## 4. Estrategias de Mitigación
 
 1.  **Validación en Servidor (Prioritaria):** NUNCA confiar en el precio enviado por el cliente. El servidor debe buscar el precio real en la Base de Datos basándose en el `item_id`.
-2.  **Firma de Parámetros:** Si el precio debe viajar, usar un HMAC para asegurar que no ha sido alterado.
+2.  **Firma de Parámetros:** Si el precio debe viajar, usar un [HMAC](../FAQ_CONCEPTOS.md#8-hmac-hash-based-message-authentication-code) para asegurar que no ha sido alterado.
 3.  **Logs de Auditoría:** Registrar cualquier discrepancia entre el precio enviado y el precio real para detectar intentos de fraude.

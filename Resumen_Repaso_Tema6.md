@@ -17,16 +17,36 @@ El **OWASP Top 10** es el estándar global sobre los riesgos de seguridad más c
 ![OWASP Top 10](./assets/img/mindmap_owasp_top10_espanol.png)
 
 ### Puntos Clave:
-1.  **A01: Control de Acceso Roto:** Acceso a datos fuera de permisos.
-2.  **A02: Fallos Criptográficos:** Exposición de datos sensibles por cifrado débil.
-3.  **A03: Inyección:** Datos no confiables enviados a un intérprete (SQL, comandos).
-4.  **A04: Diseño Inseguro:** Fallos en la arquitectura del software.
-5.  **A05: Configuración Incorrecta:** Ajustes de seguridad por defecto o incompletos.
-6.  **A06: Componentes Vulnerables/Obsoletos:** Librerías o frameworks sin parches.
-7.  **A07: Fallos de Identificación/Autenticación:** Debilidades en el login y sesiones.
-8.  **A08: Fallos en Integridad de Software/Datos:** No verificar firmas o integridad.
-9.  **A09: Fallos de Registro/Supervisión:** Falta de logs y monitorización de ataques.
-10. **A10: SSRF:** El servidor realiza peticiones no autorizadas a la red interna.
+1.  **A01: Control de Acceso Roto (Broken Access Control):** 
+    *   **Concepto:** Los usuarios pueden acceder a recursos o realizar acciones fuera de sus permisos previstos.
+    *   **Ejemplo:** Cambiar un ID en la URL (`/user/100` -> `/user/101`) para ver datos de otro perfil sin autorización.
+2.  **A02: Fallos Criptográficos (Cryptographic Failures):** 
+    *   **Concepto:** Exposición de datos sensibles (passwords, tarjetas) por falta de cifrado o uso de algoritmos obsoletos (MD5, SHA-1).
+    *   **Ejemplo:** Almacenar contraseñas en texto plano o transmitir datos críticos por HTTP.
+3.  **A03: Inyección (Injection):** 
+    *   **Concepto:** Envío de datos no confiables a un intérprete que los ejecuta como comandos o consultas.
+    *   **Ejemplo:** SQL Injection (`' or 1=1--`) para saltarse el login o inyección de comandos de consola.
+4.  **A04: Diseño Inseguro (Insecure Design):** 
+    *   **Concepto:** Fallos que vienen de la propia arquitectura y diseño del software, más que de un error de código puntual.
+    *   **Ejemplo:** Un proceso de compra que permite saltarse la pasarela de pago modificando el flujo del cliente.
+5.  **A05: Configuración Incorrecta (Security Misconfiguration):** 
+    *   **Concepto:** Ajustes de seguridad mal aplicados, como permisos por defecto, headers faltantes o funciones innecesarias activas.
+    *   **Ejemplo:** Mantener las credenciales `admin/admin` o dejar el listado de directorios (Directory Listing) habilitado.
+6.  **A06: Componentes Vulnerables y Obsoletos:** 
+    *   **Concepto:** Uso de librerías, frameworks o plugins con vulnerabilidades conocidas que no han sido parcheadas.
+    *   **Ejemplo:** Usar una versión antigua de WordPress o librerías de JS con exploits ya publicados.
+7.  **A07: Fallos de Identificación y Autenticación:** 
+    *   **Concepto:** Debilidades en el manejo de sesiones, contraseñas débiles y falta de MFA.
+    *   **Ejemplo:** Permitir ataques de fuerza bruta sin bloqueo de cuenta o no invalidar el token de sesión tras el logout.
+8.  **A08: Fallos en Integridad de Software y Datos:** 
+    *   **Concepto:** No verificar la integridad de actualizaciones, datos críticos o pipelines de CI/CD.
+    *   **Ejemplo:** Descargar una actualización de plugin por un canal no cifrado y sin firma digital.
+9.  **A09: Fallos de Registro y Supervisión (Logging & Monitoring):** 
+    *   **Concepto:** La incapacidad de detectar, escalar y responder a ataques activos por falta de logs o monitorización.
+    *   **Ejemplo:** Un ataque de fuerza bruta que dura horas y nadie lo detecta porque no se registran los errores de login.
+10. **A10: SSRF (Server-Side Request Forgery):** 
+    *   **Concepto:** El servidor es engañado para realizar peticiones a recursos internos o externos no autorizados.
+    *   **Ejemplo:** Usar una función de "importar imagen" para escanear puertos internos de la red de la empresa desde el servidor web.
 
 ### 🛠️ Ejemplo Práctico de Laboratorio (Juice Shop)
 En nuestras sesiones prácticas, utilizamos **OWASP Juice Shop** para identificar estas vulnerabilidades (ver detalle en [Laboratorio-Pentesting-01.md](./labs/Laboratorio-Pentesting-01.md)):
