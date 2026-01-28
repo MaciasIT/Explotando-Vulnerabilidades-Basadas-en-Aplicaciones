@@ -13,6 +13,15 @@ Este proyecto ha sido desarrollado con rigor técnico y pasión por la cibersegu
 
 ---
 
+## 📜 Estándar de Desarrollo: "Security First"
+Este proyecto sigue una regla inquebrantable para cualquier nuevo desarrollo o funcionalidad:
+
+> **"Si se construye, se modela."**
+
+Toda nueva *feature* que implique interacción con usuarios, manejo de datos o lógica de negocio **DEBE** pasar por un ejercicio de **Modelado de Amenazas (STRIDE/DREAD)** antes de escribir una sola línea de código. Esto garantiza que la seguridad no sea un "extra", sino la base del diseño.
+
+---
+
 ## 🚀 Vision General
 El objetivo de este repositorio es proporcionar una ruta de aprendizaje estructurada sobre el **Tema 6: Explotación de Vulnerabilidades Basadas en Aplicaciones**. No se trata solo de conocer las vulnerabilidades, sino de entender su lógica interna, cómo detectarlas y cómo mitigarlas eficazmente.
 

