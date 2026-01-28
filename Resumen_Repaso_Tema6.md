@@ -274,6 +274,52 @@ En nuestras sesiones (ver [Laboratorio-Pentesting-01.md](./labs/Laboratorio-Pent
 
 ---
 
-## 🕒 Siguiente Tema: 6.8 Explotando Vulnerabilidades de Almacenamiento y Web Services
-*(Pendiente de desarrollar...)*
+## ☁️ 6.8: Explotando Vulnerabilidades de Almacenamiento y Web Services
+
+Las aplicaciones modernas no son monolíticas; dependen de APIs y servicios web para comunicarse. Aquí es donde los atacantes buscan interfaces ocultas o mal protegidas.
+
+### 🗺️ Mapa Mental: Servicios Web (API)
+![Servicios Web y Almacenamiento](./assets/img/mindmap_webservices_storage.png)
+
+### 📋 Conceptos Fundamentales (6.8.1)
+
+1.  **Arquitecturas de Servicios Web:**
+    *   **SOAP (Simple Object Access Protocol):**
+        *   **Estándar:** Basado en XML. Muy estricto.
+        *   **Archivo Clave:** `.wsdl` (Web Service Description Language). Es como el mapa del tesoro para un hacker, ya que define todos los métodos y parámetros disponibles.
+        *   **Riesgos:** Enumeración de WSDL, Inyección XML (XXE).
+    *   **REST (Representational State Transfer):**
+        *   **Estándar:** Usa verbos HTTP estándar (GET, POST, PUT, DELETE) y suele hablar en JSON.
+        *   **Riesgos:** Falta de autenticación en endpoints ocultos, Mass Assignment (asignación masiva de variables).
+
+2.  **Vulnerabilidades en Almacenamiento del Lado del Cliente:**
+    *   **Web Storage (Local & Session Storage):**
+        *   **Peligro:** Los datos aquí son accesibles vía JavaScript. **NUNCA** guardar tokens de sesión o datos sensibles aquí si se pueden evitar (vulnerables a XSS).
+    *   **Cookies:**
+        *   Más seguras *si* se usan los flags `HttpOnly` y `Secure`, pero vulnerables si no se configuran bien.
+
+---
+
+### 🔍 6.8.2: Enumeración de WSDL (SOAP)
+*   **Concepto:** Si encontramos la URL del WSDL (ej. `http://victima.com/ws?wsdl`), podemos usar herramientas para generar peticiones válidas automáticas.
+*   **Herramientas:** **SoapUI** es el estándar para interactuar y atacar estos servicios.
+
+---
+
+### 🧪 6.8.3: Ataques a APIs REST
+1.  **Mass Assignment (Asignación Masiva):**
+    *   **Concepto:** Enviar parámetros extra en un JSON que la aplicación no espera pero procesa ciegamente.
+    *   **Ejemplo:** En un registro de usuario, enviar `{"user": "mitch", "pass": "123", "role": "admin"}`. Si el backend vuelca el JSON directo al objeto usuario, ¡bam! Eres admin.
+2.  **Métodos HTTP Inesperados:**
+    *   **Concepto:** Cambiar un `GET /users/1` por `DELETE /users/1` a ver si "suena la flauta" y borra el usuario por falta de controles.
+
+---
+
+## 🏁 Conclusión del Tema 6
+Hemos cubierto desde las inyecciones más básicas hasta la lógica de negocio compleja y los servicios web modernos. La clave es siempre:
+1.  **Nunca confiar en el cliente** (Input Validation).
+2.  **Principio de mínimo privilegio**.
+3.  **Defensa en profundidad** (WAF, Hashing, AuthZ estricta).
+
+> **Próximos Pasos:** Preparar el entorno para el Laboratorio Final Integrado.
 

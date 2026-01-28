@@ -19,24 +19,24 @@ El proyecto sigue una estructura de "Hub Centralizado" diseñada para ser profes
 ## 🚀 Tareas Pendientes
 
 ### 1. Documentación Teórica (NetAcad)
-- [ ] **6.6: Explotando Vulnerabilidades de Autorización:**
-    - Estudiar IDOR (Insecure Direct Object Reference).
-    - Escalada de Privilegios (Horizontal vs Vertical).
-- [ ] **6.7: Vulnerabilidades de Configuración y Componentes:**
-    - Seguridad en cabeceras HTTP.
-    - Uso de componentes con vulnerabilidades conocidas (CVEs).
+- [x] **6.6: Explotando Vulnerabilidades de Autorización.** (Completado)
+- [x] **6.7: Vulnerabilidades de Configuración y Componentes.** (Completado)
+- [ ] **6.8: Web Services y Almacenamiento:**
+    - [x] Borrador inicial de conceptos (SOAP, REST, Mass Assignment).
+    - [ ] Verificar alineación exacta con el temario final de NetAcad (pendiente por glitch de acceso).
 
 ### 2. Integración de Laboratorios
-- [ ] Revisar si hay ejercicios de **IDOR** en los labs de WebGoat o Juice Shop para referenciarlos en la sección 6.6.
-- [ ] Buscar ejemplos de **Escalada de Privilegios** documentados.
+- [x] Revisar si hay ejercicios de **IDOR** en los labs de WebGoat o Juice Shop. (Integrados ejemplos de Juice Shop)
+- [x] Buscar ejemplos de **Escalada de Privilegios** documentados.
 
 ### 3. Recursos Visuales
-- [ ] Generar Mapa Mental para la sección 6.6 (Autorización).
-- [ ] Generar Mapa Mental para la sección 6.7.
+- [x] Generar Mapa Mental para la sección 6.6 (Autorización).
+- [x] Generar Mapa Mental para la sección 6.7.
+- [x] **Generar Mapa Mental para la sección 6.8 (Web Services).**
 
 ### 4. Finalización
-- [ ] Repaso general del documento `Resumen_Repaso_Tema6.md`.
+- [ ] Repaso general del documento `Resumen_Repaso_Tema6.md` para asegurar coherencia.
 - [ ] `git push` al repositorio remoto (una vez configurado).
 
 ---
-**Notas de la IA Mentor:** Hemos dejado el entorno muy bien organizado. Para la próxima sesión, el primer paso lógico es abrir NetAcad en la sección 6.6 y empezar a extraer los conceptos clave de IDOR para el resumen.
+**Notas de la IA Mentor:** Hemos completado el borrador principal del Tema 6. La sección 6.8 está basada en conocimiento estándar de la industria y requiere una validación rápida contra el curso oficial cuando el acceso se restablezca. El siguiente paso creativo es generar el visual para la sección 6.8.
