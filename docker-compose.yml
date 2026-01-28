@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # -------------------------------------------------------------------------
+  # MÁQUINA ATACANTE (KALI LINUX)
+  # -------------------------------------------------------------------------
+  kali:
+    container_name: kali-attacker
+    build:
+      context: ./docker/attacker
+      dockerfile: Dockerfile
+    networks:
+      - pentest-net
+    volumes:
+      # Persistencia para guardar reportes o evidencias de scripts
+      - ./labs/evidencias:/root/evidencias
+    # Capacidad necesaria para ciertas herramientas de red
+    cap_add:
+      - NET_ADMIN
+    # Reiniciar siempre, útil si se cae
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------
+  # OBJETIVO 1: OWASP JUICE SHOP (Tienda Moderna - NodeJS)
+  # -------------------------------------------------------------------------
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juiceshop-target
+    networks:
+      - pentest-net
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------
+  # OBJETIVO 2: DVWA (App Clásica PHP Vulnerable)
+  # -------------------------------------------------------------------------
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa-target
+    networks:
+      - pentest-net
+    ports:
+      - "8081:80"
+    volumes:
+      # Persistencia de la BBDD para no resetear en cada reinicio
+      - dvwa-data:/var/lib/mysql
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------
+  # OBJETIVO 3: WEBGOAT (Entorno Java/Spring - Opcional)
+  # -------------------------------------------------------------------------
+  webgoat:
+    image: webgoat/webgoat
+    container_name: webgoat-target
+    networks:
+      - pentest-net
+    ports:
+      - "8080:8080"
+    environment:
+      - WEBGOAT_PORT=8080
+    restart: unless-stopped
+
+# ---------------------------------------------------------------------------
+# DEFINICIÓN DE REDES Y VOLÚMENES
+# ---------------------------------------------------------------------------
+networks:
+  pentest-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  dvwa-data:

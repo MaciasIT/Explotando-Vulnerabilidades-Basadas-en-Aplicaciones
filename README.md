@@ -28,11 +28,18 @@ El objetivo de este repositorio es proporcionar una ruta de aprendizaje estructu
 .
 ├── 📁 assets/
 │   └── 📁 img/                      # 🧠 Mapas mentales de alta resolución
-├── 📁 labs/                        # 🛠️ Guías de laboratorios (Juice Shop, DVWA, etc.)
+├── 📁 docker/                       # 🐳 Configuración automática (Kali Custom, etc.)
+├── 📁 labs/                         # 🛠️ Guías de laboratorios (Juice Shop, DVWA, etc.)
 ├── 📄 Resumen_Repaso_Tema6.md       # 📚 El "Manual de Combate" teórico
+├── 📄 SETUP_LABORATORIO.md          # 🚀 Guía de Instalación del Entorno (Start Here)
 ├── 📄 FAQ_CONCEPTOS.md              # ❓ Resolviendo dudas técnicas profundas
 └── 📄 GUIA_CONTINUACION.md          # 🗺️ Roadmap de aprendizaje
 ```
+
+## 🚀 Despliegue del Laboratorio (Quick Start)
+¿Quieres empezar a hackear ya? Hemos automatizado todo el entorno (Kali + Víctimas) con Docker.
+👉 **[VER GUÍA DE INSTALACIÓN PASO A PASO](./SETUP_LABORATORIO.md)**
+
 
 ---
 
